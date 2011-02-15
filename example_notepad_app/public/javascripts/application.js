@@ -3,6 +3,7 @@ $(function(){
   var notepad = $('#NotePad'),
       sidebar = notepad.find('#Sidebar'),
       noteBody = noteBody.find('#Body'),
+      appInstance = null,
       NotepadController = Backbone.Controller.extend({
         
         routes: {
@@ -31,5 +32,11 @@ $(function(){
         
       });
   
+  // instancja kontrolera/aplikacji:
+  appInstance = new NotepadController();
+  // ręcznie wchodzimy do konkretnego kontrolera:
+  appInstance.index();                           
+  // zaczynamy śledzić zmiany adresów:
+  Backbone.history.start();
   
 })
