@@ -4,6 +4,19 @@ $(function(){
       sidebar = notepad.find('#Sidebar'),
       noteBody = noteBody.find('#Body'),
       appInstance = null,
+      
+      Note = Backbone.Model.extend({
+        defaults: {
+          title: 'Example title',
+          author: 'Me',
+          content: 'Anything you want!'
+        }
+      }),
+      
+      Notes = Backbone.Collection.extend({
+        model: Note
+      }),
+      
       NotepadController = Backbone.Controller.extend({
         
         routes: {
@@ -11,6 +24,10 @@ $(function(){
           'show/:id': 'show',
           'edit/:id': 'edit',
           'destroy/:id': 'destroy'
+        },
+        
+        initialize: function(options) {
+          this.notes = new Notes(options.notes);
         },
         
         
