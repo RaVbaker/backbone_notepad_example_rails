@@ -32,7 +32,6 @@ $(function(){
         },
         
         render: function() {
-          console.log(this.collection);
           $(this.el).append(this.collection.map(this.noteTemplate).join(''));
         }
       }),
