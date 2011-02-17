@@ -1,9 +1,13 @@
 <h1>Personal Notepad<h1>
 <div id="NotePad" style="overflow:hidden;width:950px;margin: 0 auto">
-  <div id="Sidebar" style="width: 200px; float:left">
+  <ul id="Sidebar" style="width: 162px; float:left">
     
-  </div>
+  </ul>
   <div id="Body" style="width: 746px;float:left">
     
   </div>
 </div>
+
+<%= javascript_tag do %>
+  window.notesList = <%=raw Note.all.to_json %>;
+<% end%>

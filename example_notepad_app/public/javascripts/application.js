@@ -2,7 +2,7 @@ $(function(){
   // przydatne zmienne do całego programu:
   var notepad = $('#NotePad'),
       sidebar = notepad.find('#Sidebar'),
-      noteBody = noteBody.find('#Body'),
+      noteBody = notepad.find('#Body'),
       appInstance = null,
       
       Note = Backbone.Model.extend({
@@ -15,6 +15,26 @@ $(function(){
       
       Notes = Backbone.Collection.extend({
         model: Note
+      }),
+      
+      NotesListView = Backbone.View.extend({
+        tagName: 'UL',
+        
+        className: 'notesList',
+        
+        // template for single note
+        noteTemplate: _.template('<li class="note"><strong><%= get("title") %></strong> by <em><%= get("author") %></em></li>'),
+        
+        initialize: function(options) {
+          this.render();
+          options.parent.html('');
+          $(this.el).appendTo(options.parent);
+        },
+        
+        render: function() {
+          console.log(this.collection);
+          $(this.el).append(this.collection.map(this.noteTemplate).join(''));
+        }
       }),
       
       NotepadController = Backbone.Controller.extend({
@@ -32,7 +52,7 @@ $(function(){
         
         
         index: function() {
-          
+          this.notes_view = new NotesListView({collection: this.notes, parent: sidebar })
         },
         
         show: function(id) {
@@ -50,10 +70,10 @@ $(function(){
       });
   
   // instancja kontrolera/aplikacji:
-  appInstance = new NotepadController();
+  appInstance = new NotepadController({notes: [{title:"Sample note", author: "Rafal", content: "Some text"}] || window.notesList});
   // ręcznie wchodzimy do konkretnego kontrolera:
   appInstance.index();                           
   // zaczynamy śledzić zmiany adresów:
   Backbone.history.start();
   
-})
+});
