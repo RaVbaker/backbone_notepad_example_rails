@@ -23,7 +23,7 @@ echo "ActiveRecord::Base.include_root_in_json = false" > config/initializers/ar_
 
 # w config/application.rb zmieniamy domyślny javascript[:defaults] na:
 # config.action_view.javascript_expansions[:defaults] = %w(jquery.min underscore.min json2 backbone.min) aby używać jquery, backbone i underscore   
-sed -i '' '/config\.action_view\.javascript_expansions\[:defaults\]/s/\%w()/\%w(jquery.min underscore.min json2 backbone.min)/' config/application.rb
+sed -i '' '/config\.action_view\.javascript_expansions\[:defaults\]/s/\%w()/\%w(jquery.min jquery-ui.min underscore.min json2 backbone.min)/' config/application.rb
 
 # scaffold dla zasobu:
 rails generate scaffold note title:string author:string content:text
@@ -33,6 +33,7 @@ sed -i '' '/resources :notes/s/$/, :format => :json/' config/routes.rb
 
 # edytujemy app/controllers/notes_controller.rb i podmieniamy xml na json
 sed -i ''  's/xml/json/g'  app/controllers/notes_controller.rb
+sed -i ''  's/\[:note\]//g'  app/controllers/notes_controller.rb
 
 # twrzymy baze i migrujemy...              
 rake db:create

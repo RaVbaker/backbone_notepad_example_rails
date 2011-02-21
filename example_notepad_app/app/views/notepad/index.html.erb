@@ -1,12 +1,13 @@
-<h1>Personal Notepad<h1>
+<h1  style="text-align:center"><del>Personal</del> Public <em>Notepad</em></h1>
 <div id="NotePad" style="overflow:hidden;width:950px;margin: 0 auto">
-  <ul id="Sidebar" style="width: 162px; float:left">
+  <ul id="Sidebar" style="width: 262px; float:left">
     
   </ul>
-  <div id="Body" style="width: 746px;float:left">
+  <div id="Body" style="width: 646px;float:left">
     
   </div>
 </div>
+<p style="text-align:center">&copy; 2011 - thanks to <a href="http://about.me/ravbaker">Rafal "RaVbaker" Piekarski</a> - <a href="https://github.com/RaVbaker/backbone_notepad_example_rails">source code</a></p>
 
 <%= javascript_tag do %>
   window.notesList = <%=raw Note.all.to_json %>;

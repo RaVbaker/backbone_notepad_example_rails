@@ -55,7 +55,8 @@ div.field, div.actions {
   list-style: square;
 }
 
-
-div {
-  border: 1px solid #999;
-}
+              
+a:hover {
+  background-color: #fff !important;
+  color: #000;
+}             

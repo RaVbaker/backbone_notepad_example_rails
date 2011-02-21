@@ -39,8 +39,8 @@ class NotesController < ApplicationController
 
   # POST /notes
   # POST /notes.json
-  def create
-    @note = Note.new(params[:note])
+  def create                                                               
+    @note = Note.new(params_as_note_attributes_hash)
 
     respond_to do |format|
       if @note.save
@@ -59,7 +59,7 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
 
     respond_to do |format|
-      if @note.update_attributes(params[:note])
+      if @note.update_attributes(params_as_note_attributes_hash)
         format.html { redirect_to(@note, :notice => 'Note was successfully updated.') }
         format.json  { head :ok }
       else
@@ -80,4 +80,13 @@ class NotesController < ApplicationController
       format.json  { head :ok }
     end
   end
+  
+  private 
+    def params_as_note_attributes_hash
+      note = {}         
+      Note.column_names.each do |column|
+        note[column.to_sym] = params[column.to_sym]
+      end
+      note
+    end
 end
