@@ -10,6 +10,17 @@ $(function(){
           title: 'Example title',
           author: 'Me',
           content: 'Anything you want!'
+        },
+        
+        reversedTitle: function() {
+          var reversedTitle = "", 
+              currentTitle = this.get('title'), 
+              titleLength = currentTitle.length;
+          while (titleLength>0) {
+              reversedTitle += currentTitle.substring(titleLength-1, titleLength);
+              titleLength--;
+          }
+          return reversedTitle;
         }
       }),
       
@@ -99,7 +110,7 @@ $(function(){
                
           $(this.el).dialog('close').remove();
           
-          window.location.hash = "#index";
+          window.location.hash = "#show/"+model.cid;
           return false;
         }
         
@@ -109,7 +120,10 @@ $(function(){
       NoteView = Backbone.View.extend({
         noteTemplate: _.template('<h2><%= get("title") %></h2><pre><%= get("content") %></pre><p>Author: <%= get("author") %></p><p><a title="edit note" href="#edit/<%= cid %>"><img src="/images/icons/note_edit.png" alt="edit" /></a> <a title="remove note" href="#destroy/<%= cid %>"><img src="/images/icons/note_delete.png" alt="delete" /></a></p>'), 
         
-        
+        events: {
+          'mouseover': 'reverseTitle',
+          'mouseout': 'back2normalTitle'
+        },
         
         initialize: function(options){
           _.bindAll(this, 'render','reset');
@@ -124,6 +138,13 @@ $(function(){
         },
         reset: function() {
           $(this.el).hide();
+        },
+        
+        reverseTitle: function(){
+          this.$('h2').text(this.model.reversedTitle());
+        },
+        back2normalTitle: function() {
+          this.$('h2').text(this.model.get('title'));
         }
       })
       
@@ -144,7 +165,7 @@ $(function(){
         
         
         index: function() {
-          noteBody.html('<h2>Mess up with some notes!</h2>').show();                                                        
+          noteBody.html('<h2>Mess up with some notes!</h2>').show().unbind();                                                        
         },
         
         add: function() {
