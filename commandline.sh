@@ -33,7 +33,6 @@ sed -i '' '/resources :notes/s/$/, :format => :json/' config/routes.rb
 
 # edytujemy app/controllers/notes_controller.rb i podmieniamy xml na json
 sed -i ''  's/xml/json/g'  app/controllers/notes_controller.rb
-sed -i ''  's/\[:note\]//g'  app/controllers/notes_controller.rb
 
 # twrzymy baze i migrujemy...              
 rake db:create
